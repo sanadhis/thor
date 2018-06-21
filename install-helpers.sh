@@ -2,25 +2,48 @@
 
 set -e
 
+function before () {
+	if hash shout 2>/dev/null; then
+		export print=shout
+	else
+		export print=echo
+	fi
+}
+
 function main () {
-	for helper in $(ls helpers)
+	export SCRIPTDIR="$PWD/helpers"
+	
+	for helper in $(ls $SCRIPTDIR)
 	do
 		install-helper $helper
 	done
 }
 
 function install-helper () {
-	script="$1"
+	local script="$1"
 
-	source=$PWD/helpers/$script
-	target=/usr/local/bin/$script
+	local executable=${script%.sh*}
 
-	sudo ln -sf $source $target
-	echo "SYMLINK $source -> $target"
+	local source="$SCRIPTDIR/$script"
+	local sourceBinary="tmp/$executable"
+	local target="/usr/local/bin/$executable"
+
+	# compile shell script to binary
+	shc -f $source -o $sourceBinary
+	$print "INFO" ": shc -f $source -o $sourceBinary"
+
+	# move to /usr/local/bin
+	sudo mv $sourceBinary $target
+	$print "SUCCESS" ": INSTALLING $source -> $target"
+
+	# Remove generated C source code
+	rm "$source.x.c"
 }
 
+before
+
 if [ $UID -ne 0 ] ; then
-	echo "PLEASE RUN WITH SUDO"
+	$print "INFO" ": PLEASE RUN WITH SUDO"
 else
 	main "$@"
 fi
