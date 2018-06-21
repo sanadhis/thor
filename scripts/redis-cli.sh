@@ -26,6 +26,12 @@ function main () {
     local command="$@"
 
     docker run -it --link redisserver:redis --rm redis redis-cli -h redis -p 6379 $command
+
+    if [ $# -eq 0 ] ; then 
+        shout "SUCCESS" "QUERY SUCCESSFUL"
+    else
+        shout "WARNING" "QUERY FAILS"
+    fi
 }
 
 if [ "$1" == "set" ] && [ $# -eq 3 ] ; then
