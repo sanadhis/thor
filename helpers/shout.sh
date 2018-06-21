@@ -13,12 +13,12 @@ function print-banner () {
 
 if [ $# -eq 0 ] || [ "$1" == "--help" ] || [ "$1" == "help" ] ; then
 	export COLOR=$YELLOW
-	print-banner "Usage: shout \"LEVEL(WARNING|ALERT|SUCCESS)\" \"MESSAGE\""
+	print-banner "Usage: shout \"LEVEL(WARNING|ALERT|INFO|SUCCESS)\" \"MESSAGE\""
 else
 	# Decide color of banner
 	if [ "$1" == "WARNING" ] ; then
 		export COLOR=$RED
-	elif [ "$1" == "ALERT" ] ; then
+	elif [ "$1" == "ALERT" ] || [ "$1" == "INFO" ]; then
 		export COLOR=$YELLOW
 	else
 		export COLOR=$GREEN
