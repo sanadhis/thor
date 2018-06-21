@@ -4,6 +4,7 @@ An attempt to make developer and devops life easier.
 ## Dependencies
 * docker
 * cURL
+* Makefile
 * [shc](https://github.com/neurobin/shc)
 
 ## Maintainer
