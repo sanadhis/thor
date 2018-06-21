@@ -16,7 +16,7 @@ if [ $# -eq 0 ] || [ "$1" == "--help" ] || [ "$1" == "help" ] ; then
 	print-banner "Usage: shout \"LEVEL(WARNING|ALERT|INFO|SUCCESS)\" \"MESSAGE\""
 else
 	# Decide color of banner
-	if [ "$1" == "WARNING" ] || [ $1 -ne 0 ] ; then
+	if [ "$1" == "WARNING" ] || [ "$1" == "0" ] ; then
 		export COLOR=$RED
 	elif [ "$1" == "ALERT" ] || [ "$1" == "INFO" ]; then
 		export COLOR=$YELLOW
