@@ -17,6 +17,9 @@ function main () {
 	do
 		install-script $script
 	done
+
+	grep -q -F "export PATH=\$PATH:\$HOME/.thor/scripts/bin" $HOME/.thor_profile \
+		|| echo "export PATH=\$PATH:\$HOME/.thor/scripts/bin" >> $HOME/.thor_profile
 }
 
 function install-script () {
@@ -25,16 +28,16 @@ function install-script () {
 	local executable=${script%.sh*}
 
 	local source="$SCRIPTDIR/$script"
-	local sourceBinary="tmp/$executable"
-	local target="/usr/local/bin/$executable"
+	local sourceBinary="$PWD/tmp/$executable"
+	local target="$HOME/.thor/scripts/bin/$executable"
 
 	# compile shell script to binary
 	shc -f $source -o $sourceBinary
 	$print "INFO" "shc -f $source -o $sourceBinary"
 
-	# move to /usr/local/bin
+	# move to $HOME
 	sudo mv $sourceBinary $target
-	$print "SUCCESS" ": INSTALLING $source -> $target"
+	$print "SUCCESS" ": INSTALLING $sourceBinary -> $target"
 
 	# Remove generated C source code
 	rm "$source.x.c"
@@ -42,8 +45,8 @@ function install-script () {
 
 before
 
-if [ $UID -ne 0 ] ; then
-	$print "ALERT" ": PLEASE RUN WITH SUDO"
+if [ $UID -eq 0 ] ; then
+	$print "ALERT" ": PLEASE DO NOT RUN WITH SUDO"
 else
 	main "$@"
 fi
