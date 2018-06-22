@@ -36,7 +36,7 @@ function install-helper () {
     $print "INFO" ": shc -f $source -o $sourceBinary"
 
     # move to $HOME
-    sudo mv $sourceBinary $target
+    mv $sourceBinary $target
     $print "SUCCESS" ": INSTALLING $sourceBinary -> $target"
 
     # Remove generated C source code
