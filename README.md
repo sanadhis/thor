@@ -15,7 +15,7 @@ make install
 ## Persistent Export
 Add `$HOME/.thor_profile` to your rc file:
 ```bash
-echo "test -f \$HOME/.thor_profile && . \$HOME/thor_profile" >> $HOME/[your_rc_file]
+echo "test -f \$HOME/.thor_profile && . \$HOME/.thor_profile" >> $HOME/[your_rc_file]
 ```
 
 ## Temporary Export in Current Shell Terminal
