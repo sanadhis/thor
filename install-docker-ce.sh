@@ -40,6 +40,7 @@ function install () {
     sudo apt-get update && sudo apt-get install -y docker-ce
     print-banner "Activating Docker as non-root user"
     sudo usermod -aG docker $(whoami)
+    print-banner "Issue sudo usermod -aG docker <other_user> to allow other user to use docker. Don't forget to restart the user session!"
 }
 
 function main () {
